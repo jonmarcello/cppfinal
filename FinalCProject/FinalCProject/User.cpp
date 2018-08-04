@@ -12,9 +12,10 @@ public:
 	User() {}
 	
 	// constructor method
-	User(const string &user, const string &password) {
+	User(const string &user, const string &password, const string &userrole) {
 		setUsername(user);
 		setPassword(password);
+        setRole(userrole);
 	}
 
 	void setUsername(string name) {
@@ -29,6 +30,13 @@ public:
 		passwordhash = pass;
 	}
 
+    void setRole(string r) {
+        if(r != "student" && r != "employer") {
+            throw Exception("Incorrect role given.")
+        }
+        role = r;
+    }
+
 	// accessors
 	const string get_username()
 	{
@@ -40,9 +48,15 @@ public:
 		return passwordhash;
 	}
 
+    const string get_role()
+    {
+        return role;
+    }
+
 private:
 	string username;
 	string passwordhash;
+    string role;
 
 	string encrypt(string toEncrypt) {
 		char key[3] = { 'K', 'C', 'Q' }; //Any chars will work, in an array of any size
@@ -55,7 +69,6 @@ private:
 	}
 
 
-	// Rewritten to use const& on both parameters
 	string decrypt(string msg)
 	{
 		return encrypt(msg);

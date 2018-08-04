@@ -9,8 +9,8 @@ class Auth {
 public:
 	Auth() {}
 
-	User loginUser() {
-
+	User loginUser(string username, string password) {
+        
 	}
 
 	User getUserById(int id) {
@@ -38,7 +38,7 @@ public:
 	void createUser(User newUser) {
 		ofstream authFile;
 		authFile.open("users.csv", ios_base::app);
-		authFile << to_string(numberOfUsers()) + "," + newUser.get_username() + "," + newUser.get_password() + "\n";
+		authFile << to_string(numberOfUsers()) + "," + newUser.get_username() + "," + newUser.get_password() + "," + newUser.get_role() + "\n";
 		authFile.close();
 	}
 
@@ -79,7 +79,4 @@ private:
 		return number_of_lines;
 	}
 
-	vector<string> splitAtComma() {
-
-	}
 };
