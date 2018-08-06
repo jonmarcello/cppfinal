@@ -18,6 +18,11 @@ public:
         setRole(userrole);
 	}
 
+	User(const string &user, const string &password) {
+		setUsername(user);
+		setPassword(password);
+	}
+
 	void setUsername(string name) {
 		username = name;
 	}

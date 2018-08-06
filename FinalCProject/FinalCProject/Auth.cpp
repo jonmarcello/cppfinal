@@ -9,30 +9,19 @@ class Auth {
 public:
 	Auth() {}
 
-	User loginUser(string username, string password) {
-        
+	User loginUser(const string &username, const string &password) {
+		User newUser(username, password);
+		int idArray[2] = { 1, 2 };
+		string findArray[2] = { newUser.get_username(), newUser.get_password() };
+		
+		return findAtIndexArray(idArray, findArray);
 	}
 
 	User getUserById(int id) {
 		int number_of_lines = 0;
 		string strId = to_string(id);
-		string line;
-		User u;
-		vector<int> vect;
-		ifstream authFile("users.csv");
-		vector<string> explodedLine;
 
-		while (getline(authFile, line)) {
-			explodedLine = explode(line, ',');
-
-			if (explodedLine[0] == strId) {
-				u.setUsername(explodedLine[1]);
-				u.setEncryptedPassword(explodedLine[2]);
-				break;
-			}
-		}
-
-		return u;
+		return findAtIndex(0, strId);
 	}
 
 	void createUser(User newUser) {
@@ -43,6 +32,58 @@ public:
 	}
 
 private:
+	User findAtIndex(int index, string find) {
+		User u;
+		string line;
+		ifstream authFile("users.csv");
+		vector<string> explodedLine;
+
+		while (getline(authFile, line)) {
+			explodedLine = explode(line, ',');
+
+			if (explodedLine[index] == find) {
+				u.setUsername(explodedLine[1]);
+				u.setEncryptedPassword(explodedLine[2]);
+				if (explodedLine.size() > 3) {
+					u.setRole(explodedLine[3]);
+				}
+				break;
+			}
+		}
+
+		return u;
+	}
+
+	User findAtIndexArray(int index[], string find[]) {
+		User u;
+		string line;
+		ifstream authFile("users.csv");
+		vector<string> explodedLine;
+		int totalFound = 0;
+
+		while (getline(authFile, line)) {
+			explodedLine = explode(line, ',');
+			for (unsigned int i = 0; i < sizeof(index) / sizeof(index[0]); i = i + 1) {
+				if (explodedLine[index[i]] == find[i]) {
+					totalFound++;
+				}
+			}
+
+			if (totalFound == sizeof(index) / sizeof(index[0])) {
+				u.setUsername(explodedLine[1]);
+				u.setEncryptedPassword(explodedLine[2]);
+				if (explodedLine.size() > 3) {
+					u.setRole(explodedLine[3]);
+				}
+				break;
+			}
+
+			totalFound = 0;
+		}
+
+		return u;
+	}
+
 	vector<string> explode(const string& str, const char& ch) {
 		string next;
 		vector<string> result;
