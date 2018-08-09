@@ -14,7 +14,12 @@ public:
 		int idArray[2] = { 1, 2 };
 		string findArray[2] = { newUser.get_username(), newUser.get_password() };
 		
-		return findAtIndexArray(idArray, findArray);
+		try {
+			return findAtIndexArray(idArray, findArray);
+		}
+		catch (...) {
+			throw;
+		}
 	}
 
 	User getUserById(int id) {
@@ -37,6 +42,7 @@ private:
 		string line;
 		ifstream authFile("users.csv");
 		vector<string> explodedLine;
+		bool found = false;
 
 		while (getline(authFile, line)) {
 			explodedLine = explode(line, ',');
@@ -47,6 +53,7 @@ private:
 				if (explodedLine.size() > 3) {
 					u.setRole(explodedLine[3]);
 				}
+				found = true;
 				break;
 			}
 		}
@@ -60,6 +67,7 @@ private:
 		ifstream authFile("users.csv");
 		vector<string> explodedLine;
 		int totalFound = 0;
+		bool found = false;
 
 		while (getline(authFile, line)) {
 			explodedLine = explode(line, ',');
@@ -75,10 +83,15 @@ private:
 				if (explodedLine.size() > 3) {
 					u.setRole(explodedLine[3]);
 				}
+				found = true;
 				break;
 			}
 
 			totalFound = 0;
+		}
+
+		if (!found) {
+			throw "user not found";
 		}
 
 		return u;
