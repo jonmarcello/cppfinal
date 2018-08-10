@@ -42,6 +42,10 @@ public:
         role = r;
     }
 
+	void setId(int i) {
+		id = i;
+	}
+
 	// accessors
 	const string get_username()
 	{
@@ -58,10 +62,15 @@ public:
         return role;
     }
 
+	const int get_id() {
+		return id;
+	}
+
 private:
 	string username;
 	string passwordhash;
     string role;
+	int id;
 
 	string encrypt(string toEncrypt) {
 		char key[3] = { 'K', 'C', 'Q' }; //Any chars will work, in an array of any size

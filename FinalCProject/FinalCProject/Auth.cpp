@@ -1,11 +1,12 @@
 #pragma once
 #include "User.cpp"
-#include <fstream>
+#include "Misc.cpp"
 #include <vector>
 
 using namespace std;
 
 class Auth {
+	Misc misc;
 public:
 	Auth() {}
 
@@ -31,8 +32,11 @@ public:
 
 	void createUser(User newUser) {
 		ofstream authFile;
+		int num_of_users = misc.numberOfUsers("users.csv");
+
 		authFile.open("users.csv", ios_base::app);
-		authFile << to_string(numberOfUsers()) + "," + newUser.get_username() + "," + newUser.get_password() + "," + newUser.get_role() + "\n";
+		authFile << to_string(num_of_users) + "," + newUser.get_username() + "," + newUser.get_password() + "," + newUser.get_role() + "\n";
+		newUser.setId(num_of_users);
 		authFile.close();
 	}
 
@@ -45,7 +49,7 @@ private:
 		bool found = false;
 
 		while (getline(authFile, line)) {
-			explodedLine = explode(line, ',');
+			explodedLine = misc.explode(line, ',');
 
 			if (explodedLine[index] == find) {
 				u.setUsername(explodedLine[1]);
@@ -70,7 +74,7 @@ private:
 		bool found = false;
 
 		while (getline(authFile, line)) {
-			explodedLine = explode(line, ',');
+			explodedLine = misc.explode(line, ',');
 			for (unsigned int i = 0; i < sizeof(index) / sizeof(index[0]); i = i + 1) {
 				if (explodedLine[index[i]] == find[i]) {
 					totalFound++;
@@ -95,42 +99,6 @@ private:
 		}
 
 		return u;
-	}
-
-	vector<string> explode(const string& str, const char& ch) {
-		string next;
-		vector<string> result;
-
-		// For each character in the string
-		for (string::const_iterator it = str.begin(); it != str.end(); it++) {
-			// If we've hit the terminal character
-			if (*it == ch) {
-				// If we have some characters accumulated
-				if (!next.empty()) {
-					// Add them to the result vector
-					result.push_back(next);
-					next.clear();
-				}
-			}
-			else {
-				// Accumulate the next character into the sequence
-				next += *it;
-			}
-		}
-		if (!next.empty())
-			result.push_back(next);
-		return result;
-	}
-
-	int numberOfUsers() {
-		int number_of_lines = 0;
-		string line;
-		ifstream authFile("users.csv");
-
-		while (getline(authFile, line))
-			++number_of_lines;
-
-		return number_of_lines;
 	}
 
 };
