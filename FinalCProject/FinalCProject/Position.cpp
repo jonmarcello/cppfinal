@@ -31,6 +31,10 @@ public:
 		id = i;
 	}
 
+	void addStudent(User student) {
+		allStudents.push_back(student);
+	}
+
 	// accessors
 	const string get_name()
 	{
@@ -51,9 +55,14 @@ public:
 		return id;
 	}
 
+	vector<User> getAllStudents() {
+		return allStudents;
+	}
+
 private:
 	string positionName;
 	int numberOfPositions;
 	User owner;
 	int id;
+	vector<User> allStudents;
 };

@@ -52,6 +52,7 @@ private:
 			explodedLine = misc.explode(line, ',');
 
 			if (explodedLine[index] == find) {
+				u.setId(stoi(explodedLine[0]));
 				u.setUsername(explodedLine[1]);
 				u.setEncryptedPassword(explodedLine[2]);
 				if (explodedLine.size() > 3) {
@@ -82,6 +83,7 @@ private:
 			}
 
 			if (totalFound == sizeof(index) / sizeof(index[0])) {
+				u.setId(stoi(explodedLine[0]));
 				u.setUsername(explodedLine[1]);
 				u.setEncryptedPassword(explodedLine[2]);
 				if (explodedLine.size() > 3) {
