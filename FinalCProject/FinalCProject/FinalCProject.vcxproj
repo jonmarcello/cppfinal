@@ -158,6 +158,9 @@
     <None Include="positions.csv" />
     <None Include="users.csv" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FinalCProject.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
