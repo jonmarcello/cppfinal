@@ -12,7 +12,7 @@ public:
 	User() {}
 	
 	// constructor method
-	User(const string &user, const string &password, const string &userrole) {
+	User(string &user, string &password, string &userrole) {
 		setUsername(user);
 		setPassword(password);
         setRole(userrole);
