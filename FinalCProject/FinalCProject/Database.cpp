@@ -18,6 +18,7 @@ public:
 
 		string line;
 		vector<string> explodedLine;
+		vector<string> explodedUsers;
 		ifstream authFile("positions.csv");
 
 		while (getline(authFile, line)) {
@@ -29,6 +30,16 @@ public:
 
 			if (explodedLine.size() > 3) {
 				p.setOwner(auth.getUserById(stoi(explodedLine[3])));
+			}
+
+			p.clearAllStudents();
+
+			if (explodedLine.size() > 4) {
+				explodedUsers = misc.explode(explodedLine[4], '|');
+
+				for (int i = 0; i < explodedUsers.size(); i++) {
+					p.addStudent(auth.getUserById(stoi(explodedUsers[i])));
+				}
 			}
 
 			allPositions.push_back(p);
@@ -87,6 +98,7 @@ private:
 		string line;
 		ifstream authFile("positions.csv");
 		vector<string> explodedLine;
+		vector<string> explodedUsers;
 		bool found = false;
 
 		while (getline(authFile, line)) {
@@ -100,6 +112,15 @@ private:
 				if (explodedLine.size() > 3) {
 					p.setOwner(auth.getUserById(stoi(explodedLine[3])));
 				}
+
+				if (explodedLine.size() > 4) {
+					explodedUsers = misc.explode(explodedLine[4], '|');
+
+					for (int i = 0; i < explodedUsers.size(); i++) {
+						p.addStudent(auth.getUserById(stoi(explodedUsers[i])));
+					}
+				}
+
 				found = true;
 				break;
 			}

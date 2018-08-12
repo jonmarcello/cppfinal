@@ -35,6 +35,10 @@ public:
 		allStudents.push_back(student);
 	}
 
+	void clearAllStudents() {
+		allStudents.clear();
+	}
+
 	// accessors
 	const string get_name()
 	{

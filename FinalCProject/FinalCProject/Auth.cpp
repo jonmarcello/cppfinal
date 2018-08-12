@@ -30,14 +30,14 @@ public:
 		return findAtIndex(0, strId);
 	}
 
-	void createUser(User newUser) {
+	int createUser(User newUser) {
 		ofstream authFile;
 		int num_of_users = misc.numberOfUsers("users.csv");
 
 		authFile.open("users.csv", ios_base::app);
 		authFile << to_string(num_of_users) + "," + newUser.get_username() + "," + newUser.get_password() + "," + newUser.get_role() + "\n";
-		newUser.setId(num_of_users);
 		authFile.close();
+		return num_of_users;
 	}
 
 private:
