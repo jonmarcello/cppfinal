@@ -82,11 +82,9 @@ private:
 		return output;
 	}
 
-
 	string decrypt(string msg)
 	{
 		return encrypt(msg);
 	}
-
 
 };
